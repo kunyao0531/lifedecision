@@ -1,0 +1,11 @@
+{
+  "name": "information_board",
+  "version": "1.0.0",
+  "descript": "",
+  "main": "server.js",
+  "author": "Kun-Yao",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "4.17.1"
+  }
+}
