@@ -22,7 +22,7 @@ var express = require("express");
 var app = express();
 var mysql = require("mysql");
 var db = require('./func/db/dbcontext.js');
-var port = process.env.port || 5050;
+var port = process.env.PORT || 5050;
 
 /* var db_option = {
     host: 'localhost',
@@ -31,6 +31,10 @@ var port = process.env.port || 5050;
     database: 'germany',
     port: 3306, //access denied
 } */
+
+var server = app.listen(port, function() {
+    console.log("Node server is runing");
+});
 
 var db_option = {
     host: 'MYSQLCONNSTR_localdb',
@@ -47,11 +51,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/assets', express.static(__dirname + '/assets'))
 app.use('/restaurant', express.static(__dirname + '/public'))
 
-var server = app.listen(port, function() {
-    console.log("Node server is runing");
-    db.dbConnect();
-    db.dbDisconnect();
-});
+
 
 //insert
 app.post('/create', function(req, res) {
