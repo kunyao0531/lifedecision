@@ -21,7 +21,6 @@
 var express = require("express");
 var app = express();
 var mysql = require("mysql");
-var db = require('./func/db/dbcontext.js');
 var port = process.env.PORT || 5050;
 
 /* var db_option = {
