@@ -39,7 +39,7 @@ var db_option = {
     host: 'MYSQLCONNSTR_localdb',
     user: 'azure@localhost',
     database: 'germany',
-    port: 3306,
+    port: 52113,
     ssl: true
 }
 
