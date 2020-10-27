@@ -32,7 +32,7 @@ var port = process.env.PORT || 5050;
     port: 3306, //access denied
 } */
 
-var server = app.listen(port, function() {
+app.listen(port, function() {
     console.log("Node server is runing");
 });
 
