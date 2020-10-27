@@ -22,6 +22,7 @@ var express = require("express");
 var app = express();
 var mysql = require("mysql");
 var db = require('./func/db/dbcontext.js');
+var port = process.env.port || 5050;
 
 var db_option = {
     host: 'localhost',
@@ -38,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/assets', express.static(__dirname + '/assets'))
 app.use('/restaurant', express.static(__dirname + '/public'))
 
-var server = app.listen(5050, function() {
+var server = app.listen(port, function() {
     console.log("Node server is runing");
     db.dbConnect();
     db.dbDisconnect();
