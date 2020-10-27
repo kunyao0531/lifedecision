@@ -36,8 +36,9 @@ app.listen(port, function() {
 });
 
 var db_option = {
-    host: 'MYSQLCONNSTR_localdb',
-    user: 'azure@localhost',
+    host: 'localdb',
+    user: 'azure',
+    password: '6#vWHD_$',
     database: 'germany',
     port: 52113,
     ssl: true
