@@ -46,37 +46,38 @@ var server = app.listen(5050, function() {
 
 //insert
 app.post('/create', function(req, res) {
-        var city = req.body.city;
-        var name = req.body.name;
-        var type = req.body.type;
-        var address = req.body.address;
+    var city = req.body.city;
+    var name = req.body.name;
+    var type = req.body.type;
+    var address = req.body.address;
 
-        if (city && name && type && address) {
-            var insertStatement = "insert into restaurants (name, type, address, city) values ('" + name + "','" + type + "','" + address + "','" + city + "')"
-            conn.query(insertStatement, function(err, results) {
-                if (err) throw err;
-            });
+    if (city && name && type && address) {
+        //restaurant duplicated validation
+        var checkStatement = "select name from restaurants where name ='" + name + "' or address='" + address + "'";
+        conn.query(checkStatement, function(err, count) {
+            if (err) throw err;
+            if (count.length >= 1) {
+                res.status(200).send("data exist.");
+            } else {
+                var insertStatement = "insert into restaurants (name, type, address, city) values ('" + name + "','" + type + "','" + address + "','" + city + "')"
+                conn.query(insertStatement, function(err, results) {
+                    if (err) throw err;
+                    res.status(200).send("success");
+                });
+            }
+        })
+    } else {
+        res.send("all columns is mandatory");
+    }
+})
 
-        } else {
-            res.send("all columns is mandatory");
-        }
-
-    })
-    //get list
 app.post('/getList', function(req, res) {
     conn.query("select * from restaurants", function(err, results) {
         if (err) throw err;
-        console.log(results);
         res.json({ rows: results });
     })
 })
 
-// delete restaurent
-//app.get('/deleteRestaurant/:id', function(req, res) {
-//    var id = req.params.id;
-//    conn.query("DELETE FROM restaurants where id=" + id);
-//    res.sendFile(__dirname + "/public/index.html");
-//})
 app.post('/remove', function(req, res) {
     var id = req.body.id;
     conn.query("DELETE FROM restaurants where id=" + id, function(err, results) {
