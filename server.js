@@ -24,12 +24,20 @@ var mysql = require("mysql");
 var db = require('./func/db/dbcontext.js');
 var port = process.env.port || 5050;
 
-var db_option = {
+/* var db_option = {
     host: 'localhost',
     user: 'root',
     password: '@Qazwsx123',
     database: 'germany',
     port: 3306, //access denied
+} */
+
+var db_option = {
+    host: 'MYSQLCONNSTR_localdb',
+    user: 'azure@localhost',
+    password: '',
+    database: 'germany',
+    port: 3306
 }
 
 var conn = mysql.createConnection(db_option);
