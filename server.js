@@ -36,7 +36,7 @@ app.listen(port, function() {
 });
 
 var db_option = {
-    host: 'localdb',
+    host: '127.0.0.1',
     user: 'azure',
     password: '6#vWHD_$',
     database: 'germany',
