@@ -40,8 +40,7 @@ var db_option = {
     user: 'azure',
     password: '6#vWHD_$',
     database: 'germany',
-    port: 52113,
-    ssl: true
+    port: 52113
 }
 
 var conn = mysql.createConnection(db_option);
