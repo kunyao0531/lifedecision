@@ -38,9 +38,9 @@ app.listen(port, function() {
 var db_option = {
     host: 'MYSQLCONNSTR_localdb',
     user: 'azure@localhost',
-    password: '',
     database: 'germany',
-    port: 3306
+    port: 3306,
+    ssl: true
 }
 
 var conn = mysql.createConnection(db_option);
