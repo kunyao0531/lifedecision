@@ -30,7 +30,7 @@ var port = process.env.PORT || 5050;
     database: 'germany',
     port: 3306, //access denied
 } */
-
+console.info("yahsin");
 app.listen(port, function() {
     console.log("Node server is runing");
 });
