@@ -106,8 +106,9 @@ app.get('/', function(req, res) {
 
 //spt
 app.get('/spt', function(req, res) {
-    res.sendFile(__dirname + "/public/spt.html");
-//index
+        res.sendFile(__dirname + "/public/spt.html");
+    })
+    //index
 app.get('/anna', function(req, res) {
     res.sendFile(__dirname + "/public/Anna.html");
 })
