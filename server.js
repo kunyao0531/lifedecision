@@ -22,13 +22,16 @@ var express = require("express");
 var app = express();
 var mysql = require("mysql");
 var port = process.env.PORT || 5050;
+var option = require("./func/db/dbOption");
+
+console.info(option.db_option().host);
 
 var db_option = {
-    host: 'localhost',
-    user: 'root',
-    password: 'sinping1010',
-    database: 'germany',
-    port: 3306, //access denied
+    host: option.db_option().host,
+    user: option.db_option().user,
+    password: option.db_option().password,
+    database: option.db_option().database,
+    port: 3306
 }
 console.info("yahsin");
 console.info("Sinping");
@@ -54,8 +57,6 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/assets', express.static(__dirname + '/assets'))
 app.use('/restaurant', express.static(__dirname + '/public'))
-
-
 
 //insert
 app.post('/create', function(req, res) {
