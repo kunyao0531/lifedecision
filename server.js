@@ -116,3 +116,7 @@ app.get('/anna', function(req, res) {
 app.get('/linda', function(req, res) {
     res.sendFile(__dirname + "/public/linda.html");
 })
+
+app.get('/alice', function(req, res) {
+    res.sendFile(__dirname + "/public/alice.html");
+})
