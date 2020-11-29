@@ -33,6 +33,7 @@ var db_option = {
 console.info("yahsin");
 console.info("Sinping");
 console.info("Alice!!");
+console.info("Linda!");
 console.info("Gooood job.");
 
 app.listen(port, function() {
@@ -101,6 +102,10 @@ app.post('/remove', function(req, res) {
 //index
 app.get('/', function(req, res) {
     res.sendFile(__dirname + "/public/index.html");
+})
+
+app.get('/linda', function(req, res) {
+    res.sendFile(__dirname + "/public/linda.html");
 })
 
 app.get('/alice', function(req, res) {
