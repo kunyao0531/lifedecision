@@ -29,7 +29,7 @@ var db_option = {
     password: 'sinping1010',
     database: 'germany',
     port: 3306, //access denied
-} 
+}
 console.info("yahsin");
 console.info("Sinping");
 console.info("Alice!!");
@@ -40,14 +40,13 @@ app.listen(port, function() {
     console.log("Node server is runing");
 });
 
-/* var db_option = {
-    host: '127.0.0.1',
-    user: 'azure',
-    password: '6#vWHD_$',
-    database: 'germany',
-    port: 52113
-} 
-*/
+// var db_option = {
+//     host: '127.0.0.1',
+//     user: 'azure',
+//     password: '6#vWHD_$',
+//     database: 'germany',
+//     port: 52113
+// }
 
 var conn = mysql.createConnection(db_option);
 
@@ -108,6 +107,9 @@ app.get('/', function(req, res) {
 //spt
 app.get('/spt', function(req, res) {
     res.sendFile(__dirname + "/public/spt.html");
+//index
+app.get('/anna', function(req, res) {
+    res.sendFile(__dirname + "/public/Anna.html");
 })
 
 app.get('/linda', function(req, res) {
