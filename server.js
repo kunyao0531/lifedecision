@@ -104,3 +104,8 @@ app.post('/remove', function(req, res) {
 app.get('/', function(req, res) {
     res.sendFile(__dirname + "/public/index.html");
 })
+
+//spt
+app.get('/spt', function(req, res) {
+    res.sendFile(__dirname + "/public/spt.html");
+})
