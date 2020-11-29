@@ -33,6 +33,7 @@ var db_option = {
 console.info("yahsin");
 console.info("Sinping");
 console.info("Alice!!");
+console.info("Linda!");
 console.info("Gooood job.");
 
 app.listen(port, function() {
