@@ -23,17 +23,13 @@ var app = express();
 var mysql = require("mysql");
 var port = process.env.PORT || 5050;
 
-<<<<<<< HEAD
- var db_option = {
-=======
 var db_option = {
->>>>>>> 798b182d0667a593552aa345f0b16ca323b4acd5
     host: 'localhost',
     user: 'root',
     password: '',
     database: 'germany',
     port: 3306, //access denied
-} 
+}
 console.info("yahsin");
 console.info("Sinping");
 console.info("Alice!!");
@@ -43,17 +39,6 @@ console.info("Gooood job.");
 app.listen(port, function() {
     console.log("Node server is runing");
 });
-<<<<<<< HEAD
-/*
-var db_option = {
-    host: '127.0.0.1',
-    user: 'azure',
-    password: '6#vWHD_$',
-    database: 'germany',
-    port: 52113
-}
-*/
-=======
 
 // var db_option = {
 //     host: '127.0.0.1',
@@ -63,7 +48,6 @@ var db_option = {
 //     port: 52113
 // }
 
->>>>>>> 798b182d0667a593552aa345f0b16ca323b4acd5
 var conn = mysql.createConnection(db_option);
 
 var bodyParser = require("body-parser");
@@ -123,6 +107,8 @@ app.get('/', function(req, res) {
 //index
 app.get('/anna', function(req, res) {
     res.sendFile(__dirname + "/public/Anna.html");
+})
+
 app.get('/linda', function(req, res) {
     res.sendFile(__dirname + "/public/linda.html");
 })
