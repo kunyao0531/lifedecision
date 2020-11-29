@@ -6,7 +6,11 @@
   "author": "Kun-Yao",
   "dependencies": {
     "body-parser": "^1.19.0",
+<<<<<<< HEAD
     "express": "^4.17.1",
+=======
+    "express": "4.17.1",
+>>>>>>> 19924610fe5752aec92acd08d4542b7937130469
     "mysql": "^2.18.1"
   }
 }
