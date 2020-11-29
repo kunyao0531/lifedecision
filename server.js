@@ -33,10 +33,10 @@ var db_option = {
     database: option.db_option().database,
     port: 3306
 }
-console.info("yahsin");
-console.info("Sinping");
-console.info("Alice!!");
-console.info("Linda!");
+console.info(option.db_option().host);
+console.info(option.db_option().user);
+console.info(option.db_option().password);
+console.info(option.db_option().database);
 console.info("Gooood job.");
 
 app.listen(port, function() {
@@ -107,9 +107,10 @@ app.get('/', function(req, res) {
 
 //spt
 app.get('/spt', function(req, res) {
-        res.sendFile(__dirname + "/public/spt.html");
-    })
-    //index
+    res.sendFile(__dirname + "/public/spt.html");
+})
+
+
 app.get('/anna', function(req, res) {
     res.sendFile(__dirname + "/public/Anna.html");
 })
