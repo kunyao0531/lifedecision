@@ -22,7 +22,7 @@ var express = require("express");
 var app = express();
 var mysql = require("mysql");
 var port = process.env.PORT || 5050;
-var option = require("./func/db/dbOption");
+var option = require("./db/dbOption");
 
 console.info(option.db_option().host);
 
