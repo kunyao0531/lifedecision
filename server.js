@@ -109,6 +109,7 @@ app.get('/', function(req, res) {
 app.get('/spt', function(req, res) {
     res.sendFile(__dirname + "/public/spt.html");
 })
+
 app.get('/linda', function(req, res) {
     res.sendFile(__dirname + "/public/linda.html");
 })
