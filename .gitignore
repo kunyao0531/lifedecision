@@ -1,2 +1,3 @@
-/node_modules
-/db
+db
+node_modules
+db/dbOption.js

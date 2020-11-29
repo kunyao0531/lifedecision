@@ -1,4 +1,4 @@
-//填入你的本機端資料庫連線資訊0
+//填入你的本機端資料庫連線資訊
 var db_option = {
     host: 'localhost',
     user: 'root',
