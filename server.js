@@ -112,7 +112,7 @@ app.get('/spt', function(req, res) {
 
 
 app.get('/anna', function(req, res) {
-    res.sendFile(__dirname + "/public/Anna.html");
+    res.sendFile(__dirname + "/public/anna.html");
 })
 
 app.get('/linda', function(req, res) {
