@@ -1,19 +1,19 @@
 $(function(){
-    $("#新增文章").on('click', function() {
+    $("#addarticle").on('click', function() {
         $(".alert-danger").hide();
-        var model = { 文章標題: $("#文章標題").val(), #Hashtag/主題: $("#hashtagb").val(), 發表時間: $("#發表時間b").val(), 國家: $("#國家b").val() };
+        var model = { title: $("#title2").val(), hashtag: $("#hashtag2").val(), date: $("#date2").val(), country: $("#country2").val() };
         $.post("/create", model, function(err, response) {
             if (err === "data exist.") {
                 $(".alert-danger").show();
             } else {
-                $("#文章表單").append("<tr><td><div class='articleName'>" + model.文章標題 +
-                    "</div></td><td>" + model.#Hashtag/主題 +
-                    "</td><td>" + model.發表時間 +
-                    "</td><td>" + model.國家 + "</td><td>Added</td></tr>")
+                $("#addresult").append("<tr><td><div class='articleName'>" + model.title +
+                    "</div></td><td>" + model.hashtag +
+                    "</td><td>" + model.date +
+                    "</td><td>" + model.country + "</td><td>Added</td></tr>")
             }
         });
 
-        $("#文章標題").val("");
+        $("#title2").val("");
 
     });
 
