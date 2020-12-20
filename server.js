@@ -122,3 +122,12 @@ app.get('/linda', function(req, res) {
 app.get('/alice', function(req, res) {
     res.sendFile(__dirname + "/public/alice.html");
 })
+
+
+app.post('/anna/creat', function(req, res) {
+    console.info("aa");
+})
+
+app.post('/alice/creat', function(req, res) {
+    console.info("aa");
+})

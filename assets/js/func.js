@@ -31,7 +31,11 @@ $(function() {
 
     $("#submitForm").on('click', function() {
         $(".alert-danger").hide();
-        var model = { name: $("#restaurant").val(), city: $("#city").val(), type: $("#type").val(), address: $("#address").val() };
+
+        var name = $("#restaurant").val();
+        if (name.length === 0) { alert("name is required"); return false; }
+
+        var model = { name: name, city: $("#city").val(), type: $("#type").val(), address: $("#address").val() };
         $.post("/create", model, function(err, response) {
             if (err === "data exist.") {
                 $(".alert-danger").show();
