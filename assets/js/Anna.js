@@ -1,15 +1,22 @@
 $(function(){
-    $("#addarticle").on('click', function() {
+    $("#form_add").on('click', function() {
         $(".alert-danger").hide();
-        var model = { title: $("#title2").val(), hashtag: $("#hashtag2").val(), date: $("#date2").val(), country: $("#country2").val() };
-        $.post("/create", model, function(err, response) {
+
+        var name = $("#title_add").val();
+        if (name.length === 0) { alert("name is required"); return false; }
+
+        var name = $("#add_text").val();
+        if (name.length === 0) { alert("name is required"); return false; }
+
+        var model = { hashtag: $("#hashtag_add").val(), date: $("#date_add").val(), country: $("#country_add").val() };
+        $.post("/anna/create-article", model, function(err, response) {
             if (err === "data exist.") {
                 $(".alert-danger").show();
             } else {
-                $("#addresult").append("<tr><td><div class='articleName'>" + model.title +
-                    "</div></td><td>" + model.hashtag +
-                    "</td><td>" + model.date +
-                    "</td><td>" + model.country + "</td><td>Added</td></tr>")
+                $("#addresult").append("<tr><td><div class='articleName'>" + model.title_add +
+                    "</div></td><td>" + model.hashtag_add +
+                    "</td><td>" + model.date_add +
+                    "</td><td>" + model.country_add + "</td><td>Added</td></tr>")
             }
         });
 

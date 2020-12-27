@@ -111,8 +111,35 @@ app.get('/spt', function(req, res) {
 })
 
 
-app.get('/anna', function(req, res) {
+app.get('/anna/create-article', function(req, res) {
     res.sendFile(__dirname + "/public/anna.html");
+})
+
+app.post('/anna/create-article', function(req, res) {
+    var title = req.body.title;
+    var hashtag = req.body.hashtag;
+    var country = req.body.country;
+    var date = req.body.date;
+    var article = req.body.article;
+
+    if (title && theme && country && date && artible) {
+        //article duplicated validation
+        var checkStatement = "select name from articles where title ='" + title + "' or hashtag='" + hashtag + "'";
+        conn.query(checkStatement, function(err, count) {
+            if (err) throw err;
+            if (count.length >= 1) {
+                res.status(200).send("data exist.");
+            } else {
+                var insertStatement = "insert into articles (title, hashtag, country, date, article) values ('" + title + "','" + hashtag + "','" + country + "','" + date + "','" + article + "')"
+                conn.query(insertStatement, function(err, results) {
+                    if (err) throw err;
+                    res.status(200).send("success");
+                });
+            }
+        })
+    } else {
+        res.send("all columns is mandatory");
+    }
 })
 
 app.get('/linda', function(req, res) {
