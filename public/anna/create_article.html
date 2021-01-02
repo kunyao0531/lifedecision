@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Decisions in life - Anna Goes Around</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/anna.css">
+    <style>
+        .pointer {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+                <a class="navbar-brand" href="#">Decisions in the Life</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">What to eat <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/spt">What to drink</a></li>
+                    <li><a href="/alice">Doctors to see</a></li>
+                    <li class="active"><a href="/anna">Anna goes around</a></li>
+                    <li><a href="/linda">What to see</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+        <div style="text-align: center">
+            <a href="https://www.instagram.com/anna_goes_around/" target="blank"> 
+            <img id="pro-pic" src="/assets/images/anna/anna.profile.JPG" width="200" height="200"></a>
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="container">
+            <div style="height:200px; width:100%; text-align: center; display:table;">
+                <div style="margin:0 auto;display:table-cell;vertical-align: middle;">
+                    <form>
+                        <h2 class="result"><!DOCTYPE html>
+                            <html>
+                            <head>
+                            <title>Font Awesome 5 Icons</title>
+                            <meta name='viewport' content='width=device-width, initial-scale=1'>
+                            <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+                            <!--Get your own code at fontawesome.com-->
+                            <i style='font-size:36px' class='fas'>&#xf3c5;</i>
+                            </i> 歡迎來到 安娜到處走<br>Welcome to  Anna goes around
+                        </h2>
+                        <div class="form-group">
+                            <input type="button" value="一起體驗德國生活!" class="btn btn-info luckyarticle">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <div class="container">
+            <div class="col-md-3">
+                <h3><i class="glyphicon glyphicon-plus"></i> 新增文章</h3>
+                <form action="/create-new-question" method="post" id="form_add">
+                    <div class="form-group">
+                        <label>文章標題:</label>
+                        <input type="text" id="title_add" value="" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>#Hashtag/主題: </label><br>
+                        <form action="/action_page.php">
+                            <input type="checkbox" id="hashtag1" name="eat" value="eat">
+                            <label for="hashtag1"> #安娜到處吃</label><br>
+                            <input type="checkbox" id="hashtag2" name="try" value="try">
+                            <label for="hashtag2"> #安娜嚐鮮趣</label><br>
+                            <input type="checkbox" id="hashtag3" name="travel" value="travel">
+                            <label for="hashtag3"> #安娜旅行趣</label><br>
+                            <input type="checkbox" id="hashtag4" name="culture" value="culture">
+                            <label for="hashtag4"> #安娜談文化</label><br>
+                            <input type="checkbox" id="hashtag5" name="experience" value="experience">
+                            <label for="hashtag5"> #安娜談經驗</label><br>
+                            <input type="checkbox" id="hashtag6" name="cook" value="cook">
+                            <label for="hashtag6"> #安娜下廚趣</label><br>
+                            <input type="checkbox" id="hashtag7" name="cookhome" value="cookhome">
+                            <label for="hashtag7"> #家鄉味自己做</label><br>
+                            <input type="checkbox" id="hashtag8" name="share" value="share">
+                            <label for="hashtag8"> #安娜享好物</label><br>
+                            <input type="checkbox" id="hashtag9" name="stueat" value="stueat">
+                            <label for="hashtag9"> #斯圖加特餐廳推薦</label><br>
+                            <input type="checkbox" id="hashtag10" name="esseat" value="esseat">
+                            <label for="hashtag10"> #埃森餐廳推薦</label><br>
+                            <input type="checkbox" id="hashtag11" name="duseat" value="duseat">
+                            <label for="hashtag11"> #杜賽道夫餐廳推薦</label><br>
+                          </form>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label>發表時間:</label>
+                        <select class="form-control" id="date_add">
+                            <option value="choosedate">請選擇</option>
+                            <option value="2020-12-01">12.2020.</option>
+                            <option value="2020-11-01">11.2020.</option>
+                            <option value="2020-10-01">10.2020.</option>
+                            <option value="2020-09-01">09.2020.</option>
+                            <option value="2020-08-01">08.2020.</option>
+                            <option value="2020-07-01">07.2020.</option>
+                            <option value="2020-06-01">06.2020.</option>
+                            <option value="2020-05-01">05.2020.</option>
+                            <option value="2020-04-01">04.2020.</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>國家:</label>
+                        <select class="form-control" id="country_add">
+                            <option value="choosecountry">請選擇</option>
+                            <option value="germany">德國</option>
+                            <option value="sweden">瑞典</option>
+                            <option value="spain">西班牙</option>
+                            <option value="swiss">瑞士</option>
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="col-md-9">
+                <form action="/action_page.php">
+                    <label for="addtext">内文:</label>
+                    <br>
+                    <textarea class="form-control" id="add_text" name="addtext" rows="30" ></textarea>
+                </form>
+                    <br>
+                    <input type="button" id="add_article" name="add article" class="btn btn-success" value="新增文章">
+                    <div class="alert alert-danger" role="alert" style="margin-top:20px;">文章標題已存在!</div>
+            </div>
+
+        </div>
+    </div>
+                
+            
+    <div class="row">
+        <div class="container">
+            <div class="col-md-12">
+                <h3><i class="glyphicon glyphicon-bookmark"></i> 文章表單</h3>
+                    <table class="table" id="result_add">
+                        <thead>
+                            <tr>
+                                <td colspan="5" class="text-align:right;">
+                                    <button class="btn btn-warning refreshtable"><i class="glyphicon glyphicon-refresh"></i> 刷新</button>
+                                    <button onclick="window.location='/anna/index';" class="btn btn-warning refreshtable"><i class=""></i> 尋找文章</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>文章標題</b></td>
+                                <td><b>#Hashtag/主題</b></td>
+                                <td><b>發表時間</b></td>
+                                <td><b>國家</b></td>
+                                <td><b>刪除</b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="/assets/js/anna.js"></script>
+</body>
+
+</html>
