@@ -58,6 +58,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/assets', express.static(__dirname + '/assets'))
 app.use('/restaurant', express.static(__dirname + '/public'))
 
+
 //insert
 app.post('/create', function(req, res) {
     var city = req.body.city;
@@ -91,6 +92,8 @@ app.post('/getList', function(req, res) {
         res.json({ rows: results });
     })
 })
+
+
 
 app.post('/remove', function(req, res) {
     var id = req.body.id;
@@ -142,19 +145,69 @@ app.post('/anna/create-article', function(req, res) {
     }
 })
 
-app.get('/linda', function(req, res) {
-    res.sendFile(__dirname + "/public/linda.html");
+
+
+// Alice starts from here
+
+app.post('/getClinicList', function(req, res) {
+    conn.query("select * from clinic", function(err, results) {
+        if (err) throw err;
+        res.json({ rows: results });
+    })
+})
+
+app.post('/removeClinic', function(req, res) {
+    var id = req.body.id;
+    conn.query("DELETE FROM clinic where id=" + id, function(err, results) {
+        if (err) throw err;
+        res.sendStatus(200);
+    });
 })
 
 app.get('/alice', function(req, res) {
     res.sendFile(__dirname + "/public/alice.html");
 })
 
+app.post('/alice/createClinic', function(req, res) {
+    var clinicName = req.body.clinicName;
+    var doctorName = req.body.doctorName;
+    var speciality = req.body.speciality;
+    var addressStreet = req.body.addressStreet;
+    var addressNumber = req.body.addressNumber;
+    var addressPoscal = req.body.addressPoscal;
+    var city = req.body.city;
 
-app.post('/anna/creat', function(req, res) {
-    console.info("aa");
+    var languageEn = req.body.languageEn  ;
+    var languageCn = req.body.languageCn;
+
+
+    if (clinicName && doctorName && speciality && addressStreet && addressNumber && addressPoscal && city && languageEn && languageCn) {
+        //restaurant duplicated validation
+        var checkStatement = "select clinicName from clinic where clinicName ='" + clinicName + "' or doctorName='" + doctorName + "'";
+        conn.query(checkStatement, function(err, count) {
+            if (err) throw err;
+            if (count.length >= 1) {
+                res.status(200).send("data exist.");
+            } else {
+                var insertStatement = "insert into clinic (clinicName, doctorName, speciality, addressStreet, addressNumber, addressPoscal, city, languageEn ,languageCn ) values ('" + clinicName + "','" + doctorName + "','" + speciality + "','" + addressStreet + "','" + addressNumber + "','" + addressPoscal + "','" + city + "','" + languageEn + "','" + languageCn + "')"
+
+                conn.query(insertStatement, function(err, results) {
+                    if (err) throw err;
+                    res.status(200).send("success");
+                });
+
+            }
+        })
+    } else {
+        res.send("all columns is mandatory");
+    }
 })
 
-app.post('/alice/creat', function(req, res) {
+
+app.get('/linda', function(req, res) {
+    res.sendFile(__dirname + "/public/linda.html");
+})
+
+app.post('/anna/creat', function(req, res) {
     console.info("aa");
 })
