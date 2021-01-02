@@ -1,22 +1,37 @@
 $(function(){
-    $("#form_add").on('click', function() {
+    $("#add_article").on('click', function() {
         $(".alert-danger").hide();
 
         var name = $("#title_add").val();
-        if (name.length === 0) { alert("name is required"); return false; }
+        if (name.length === 0) { alert("表格需填寫完整"); return false; }
 
         var name = $("#add_text").val();
-        if (name.length === 0) { alert("name is required"); return false; }
+        if (name.length === 0) { alert("表格需填寫完整"); return false; }
 
-        var model = { hashtag: $("#hashtag_add").val(), date: $("#date_add").val(), country: $("#country_add").val() };
-        $.post("/anna/create-article", model, function(err, response) {
+        var hashtagList = "";
+
+        $(".hashtag[type=checkbox]:checked").each(function(){
+            if(hashtagList==="")
+            {hashtagList = $(this).val();} else {hashtagList = hashtagList + "," + $(this).val();}
+            
+        }) 
+
+        var model = { 
+            title: $("#title_add").val(),
+            text: $("#add_text").val(),
+            hashtag: hashtagList, 
+            date: $("#date_add").val(), 
+            country: $("#country_add").val() 
+        };
+
+        $.post("/anna/create", model, function(err, response) {
             if (err === "data exist.") {
                 $(".alert-danger").show();
             } else {
-                $("#addresult").append("<tr><td><div class='articleName'>" + model.title_add +
-                    "</div></td><td>" + model.hashtag_add +
-                    "</td><td>" + model.date_add +
-                    "</td><td>" + model.country_add + "</td><td>Added</td></tr>")
+                $("#result_add").append("<tr><td><div class='articleName'>" + model.title +
+                    "</div></td><td>" + model.hashtag +
+                    "</td><td>" + model.date +
+                    "</td><td>" + model.country + "</td><td>Added</td></tr>")
             }
         });
 
@@ -39,5 +54,13 @@ $(function(){
         $(".result").html("<i class='glyphicon glyphicon-flag'></i> " + pickedArticle);
     })
 
-    getList();
+    //getList();
 })
+
+//function langConvert(val) {
+//    if (val === 0) {
+//        return "NO";
+//    } else {
+//        return "YES";
+//    }
+//}

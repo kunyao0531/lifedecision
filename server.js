@@ -111,26 +111,36 @@ app.get('/spt', function(req, res) {
 })
 
 
-app.get('/anna/create-article', function(req, res) {
-    res.sendFile(__dirname + "/public/anna.html");
+app.get('/anna', function(req, res) {
+    res.sendFile(__dirname + "/public/anna/index.html");
 })
 
-app.post('/anna/create-article', function(req, res) {
+app.get('/anna/index', function(req, res) {
+    res.sendFile(__dirname + "/public/anna/index.html");
+})
+
+app.get('/anna/create_article', function(req, res) {
+    res.sendFile(__dirname + "/public/anna/create_article.html");
+})
+
+app.post('/anna/create', function(req, res) {
     var title = req.body.title;
     var hashtag = req.body.hashtag;
     var country = req.body.country;
     var date = req.body.date;
-    var article = req.body.article;
+    var text = req.body.text;
 
-    if (title && theme && country && date && artible) {
+    console.log(title +" , "+ hashtag +" , "+ country +" , "+ date +" , "+ text)
+    if (title && hashtag && country && date && text) {
         //article duplicated validation
-        var checkStatement = "select name from articles where title ='" + title + "' or hashtag='" + hashtag + "'";
+        var checkStatement = "select title from anna_goes_around where title ='" + title + "'";
         conn.query(checkStatement, function(err, count) {
             if (err) throw err;
             if (count.length >= 1) {
                 res.status(200).send("data exist.");
             } else {
-                var insertStatement = "insert into articles (title, hashtag, country, date, article) values ('" + title + "','" + hashtag + "','" + country + "','" + date + "','" + article + "')"
+                var insertStatement = "insert into anna_goes_around (title, hashtag, country, date, article) values ('" + title + "','" + hashtag + "','" + country + "','" + date + "','" + text + "')"
+                console.log(insertStatement);
                 conn.query(insertStatement, function(err, results) {
                     if (err) throw err;
                     res.status(200).send("success");
