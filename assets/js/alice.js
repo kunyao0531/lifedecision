@@ -1,11 +1,13 @@
-$(function() {
-    $(".alert-danger").hide();
+$(function () {
+    $(".alert-repeatitiveData").hide();
+
+
     //get list
     var getClinicList = function () {
         $("#clinic-list tbody tr").remove();
         $.post("/getClinicList", function (response) {
 
-        
+
 
             for (var i = 0; i < response.rows.length; i++) {
                 var deleteBT = "<a href='#' class='rm pointer' id='" + response.rows[i].id + "'>Delete</a>";
@@ -36,24 +38,53 @@ $(function() {
         })
     }
 
-   
 
-  
+
+
+
+    //   search result
+
+
+
     $("#submitSearchClinic").on('click', function () {
 
-
-    })
-
-    function langCovert(val) {
-        if (val === false) {
-            return "NO";
+        var searchClinic = $("#searchClinic").val();
+        if (searchClinic.length === 0) {
+            alert("Input is required"); return false;
         } else {
-            return "YES";
+
+            var model = {searchClinic: $("#searchClinic").val()}
+
+            $.post("/getSearchedResult", model, function (response) {
+                // if (err === "no result.") {
+                //     alert("No result"); return false;
+                // }
+
+                for (var i = 0; i < response.rows.length; i++) {
+                    $("#search-result-list tbody").append("<tr><td><div>" + response.rows[i].clinicName +
+                        "</div></td><td>" + response.rows[i].doctorName +
+                        "</td><td>" + response.rows[i].speciality +
+                        "</td><td>" + response.rows[i].addressStreet + response.rows[i].addressNumber +
+                        "</td><td>" + response.rows[i].addressPoscal +
+                        "</td><td>" + response.rows[i].city +
+                        "</td><td>" + response.rows[i].languageEn +
+                        "</td><td>" + response.rows[i].languageCn + "</td></tr>")
+                }
+
+
+            })
         }
-    }
+    });
+
+
+
+
+
+
+
 
     $("#submitForm").on('click', function () {
-        $(".alert-danger").hide();
+        $(".alert-repeatitiveData").hide();
 
         //add validation
 
@@ -77,7 +108,7 @@ $(function() {
         if (addressNumber.length === 0) { alert("Adress number is required"); return false; }
 
 
-        var addressNumber = $("#city").val();
+        var city = $("#city").val();
         if (city.length === 0) { alert("City is required"); return false; }
 
 
@@ -86,26 +117,26 @@ $(function() {
         if (addressPoscal.length === 0) { alert("Address poscal is required"); return false; }
 
 
-        
-        
 
-        var model = { clinicName: $("#clinicName").val(), doctorName: $("#doctorName").val(), speciality: $("#speciality").val(), addressStreet: $("#addressStreet").val(), addressNumber: $("#addressNumber").val(), city: $("#city").val(), addressPoscal: $("#addressPoscal").val(), languageEn: $("#languageEn").is(':checked') ===false? 'No':'Yes', languageCn: $("#languageCn").is(':checked') ===false? 'No':'Yes'};
+
+
+        var model = { clinicName: $("#clinicName").val(), doctorName: $("#doctorName").val(), speciality: $("#speciality").val(), addressStreet: $("#addressStreet").val(), addressNumber: $("#addressNumber").val(), city: $("#city").val(), addressPoscal: $("#addressPoscal").val(), languageEn: $("#languageEn").is(':checked') === false ? 'No' : 'Yes', languageCn: $("#languageCn").is(':checked') === false ? 'No' : 'Yes' };
         $.post("/alice/createClinic", model, function (err, response) {
             if (err === "data exist.") {
-                $(".alert-danger").show();
+                $(".alert-repeatitiveData").show();
             } else {
                 $("#clinic-list tbody").append("<tr><td><div class='clinicName'>" + model.clinicName +
                     "</div></td><td>" + model.doctorName +
                     "</td><td>" + model.speciality +
-                    "</td><td>" + model.addressStreet + " " +model.addressNumber +
+                    "</td><td>" + model.addressStreet + " " + model.addressNumber +
                     "</td><td>" + model.addressPoscal +
                     "</td><td>" + model.city +
-                    "</td><td>" + model.languageEn  +
-                    "</td><td>" + model.languageCn  + "</td><td>Added</td></tr>")
-                    // "</td><td>" + langCovert(model.languageEn)  +
-                    // "</td><td>" + langCovert(model.languageCn)  + "</td><td>Added</td></tr>")
-                    // "</td><td>" + model.langCovert(languageEn)  +
-                    // "</td><td>" + model.langCovert(languageCn)  + "</td><td>Added</td></tr>")
+                    "</td><td>" + model.languageEn +
+                    "</td><td>" + model.languageCn + "</td><td>Added</td></tr>")
+                // "</td><td>" + langCovert(model.languageEn)  +
+                // "</td><td>" + langCovert(model.languageCn)  + "</td><td>Added</td></tr>")
+                // "</td><td>" + model.langCovert(languageEn)  +
+                // "</td><td>" + model.langCovert(languageCn)  + "</td><td>Added</td></tr>")
 
             }
         });
@@ -116,7 +147,7 @@ $(function() {
         $("#addressStreet").val("");
         $("#addressNumber").val("");
         $("#addressPoscal").val("");
-        // $("#city").val("");
+        $("#city").val("");
         $("#languageEn").prop("checked", false);
         $("#languageCn").prop("checked", false);
 
@@ -128,19 +159,21 @@ $(function() {
         getClinicList();
     });
 
-    $("#submitSearchClinic").on('click', function () {
-        var searchWord = $("#searchWord").val();
-        if (searchWord.length === 0) { alert("Search Word is required"); return false; }
-    //     var rList = [];
-    //     $(".clinicTable").each(function () {
-    //         var name = $(this).html();
-    //         rList.push(name);
-    //     });
-    //     var random = Math.floor(Math.random() * rList.length);
-    //     var pickedRestaurant = rList[random];
-    //     $(".result").html("<i class='glyphicon glyphicon-flag'></i> " + pickedRestaurant);
-    })
+    // $("#submitSearchClinic").on('click', function () {
+    //     var searchWord = $("#searchWord").val();
+    //     if (searchWord.length === 0) { alert("Search Word is required"); return false; }
+    // //     var rList = [];
+    // //     $(".clinicTable").each(function () {
+    // //         var name = $(this).html();
+    // //         rList.push(name);
+    // //     });
+    // //     var random = Math.floor(Math.random() * rList.length);
+    // //     var pickedRestaurant = rList[random];
+    // //     $(".result").html("<i class='glyphicon glyphicon-flag'></i> " + pickedRestaurant);
+    // })
 
     getClinicList();
 
-});
+
+
+})

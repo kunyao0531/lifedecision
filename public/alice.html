@@ -52,20 +52,60 @@
             <div style="height:300px; width:100%; text-align: center; display:table;">
                 <div style="margin:0 auto;display:table-cell;vertical-align: middle;">
                     <form>
-                        <h2 class="result text-left"><i class="fas fa-search-location"></i> Looking for the clinic?
+                        <h2 class="text-left"><i class="fas fa-search-location"></i> Looking for the clinic?
                         </h2>
                         <p class=" text-left">Enter the keyword below.</p>
 
                         <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Search clinic" aria-label="Search" value="" id="searchWord">
+                            <input class="form-control" id="searchClinic" type="text" placeholder="Search clinic" aria-label="Search" >
                         </div>
+                        <!-- <div class="alert alert-warning alert-noDataFound" role="alert" style="margin-top:20px;">No result has been found. Please change the keyword and enter again.</div> -->
                         <button class="btn btn-primary pull-left" type="submit" id="submitSearchClinic">Go</button>
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+<!-- Search result -->
+    <div class="row ">
+        <div class="container">
+            <div style="height:50px; width:100%; text-align: center; display:table;">
+                <div style="margin:0 auto;display:table-cell;vertical-align: middle;">
+    <div class="col-md-12 text-left">
+        <h4><i class="fas fa-folder-open"></i> Result</h4>
+        <p>You will find all the search result in the list below.</p>
+        <table class="table" id="search-result-list">
+            <thead>
+                <tr>
+                   
+                </tr>
+                <tr>
+                    <td>Clinic name</td>
+                    <td>Doctor name</td>
+                    <td>Speciality</td>
+                    <td>Address</td>
+                    <td>Address Poscal</td>
+                    <td>City</td>
+                    <td>English speaking</td>
+                    <td>Chinese speaking</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Search result -->
+
+
+
+
+
     <hr>
     <div class="row">
         <div class="container">
@@ -102,9 +142,7 @@
                     <div class="row">
                         <div class="form-group col-md-8">
                             <label>City:</label>
-                            <select class="form-control" id="city" disabled="disabled">
-                                <option value="Dusseldorf"></option>
-                            </select>
+                            <input type="text" id="city" value="" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
                             <label>Poscal code:</label>
@@ -133,7 +171,7 @@
                     <input type="button" id="submitForm" name="submittheform" class="btn btn-success"
                         value="Submit the recommendation">
 
-                    <div class="alert alert-danger" role="alert" style="margin-top:20px;">The clinic has been
+                    <div class="alert alert-danger alert-repeatitiveData" role="alert" style="margin-top:20px;">The clinic has been
                         established!</div>
 
                 </form>
@@ -141,10 +179,10 @@
             <div class="col-md-8">
                 <h3><i class="fas fa-clinic-medical"></i> Clinic List</h3>
                 <p>You will find all the recommended clinics in the list below.</p>
-                <table class="table" id="clinic-list">
+                <table class="table " id="clinic-list">
                     <thead>
                         <tr>
-                            <td colspan="5" class="text-align:right;">
+                            <td colspan="5" class="text-align:right">
                                 <button class="btn btn-warning refreshtable"><i class="glyphicon glyphicon-refresh"></i>
                                     Refresh</button>
                             </td>

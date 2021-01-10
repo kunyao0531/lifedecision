@@ -39,7 +39,7 @@ console.info(option.db_option().password);
 console.info(option.db_option().database);
 console.info("Gooood job.");
 
-app.listen(port, function() {
+app.listen(port, function () {
     console.log("Node server is runing");
 });
 
@@ -60,22 +60,22 @@ app.use('/restaurant', express.static(__dirname + '/public'))
 
 
 //insert
-app.post('/create', function(req, res) {
+app.post('/create', function (req, res) {
     var city = req.body.city;
     var name = req.body.name;
     var type = req.body.type;
     var address = req.body.address;
 
     if (city && name && type && address) {
-        //restaurant duplicated validation
+        //restaaurant duplicated validation
         var checkStatement = "select name from restaurants where name ='" + name + "' or address='" + address + "'";
-        conn.query(checkStatement, function(err, count) {
+        conn.query(checkStatement, function (err, count) {
             if (err) throw err;
             if (count.length >= 1) {
                 res.status(200).send("data exist.");
             } else {
                 var insertStatement = "insert into restaurants (name, type, address, city) values ('" + name + "','" + type + "','" + address + "','" + city + "')"
-                conn.query(insertStatement, function(err, results) {
+                conn.query(insertStatement, function (err, results) {
                     if (err) throw err;
                     res.status(200).send("success");
                 });
@@ -86,8 +86,8 @@ app.post('/create', function(req, res) {
     }
 })
 
-app.post('/getList', function(req, res) {
-    conn.query("select * from restaurants", function(err, results) {
+app.post('/getList', function (req, res) {
+    conn.query("select * from restaurants", function (err, results) {
         if (err) throw err;
         res.json({ rows: results });
     })
@@ -95,56 +95,56 @@ app.post('/getList', function(req, res) {
 
 
 
-app.post('/remove', function(req, res) {
+app.post('/remove', function (req, res) {
     var id = req.body.id;
-    conn.query("DELETE FROM restaurants where id=" + id, function(err, results) {
+    conn.query("DELETE FROM restaurants where id=" + id, function (err, results) {
         if (err) throw err;
         res.sendStatus(200);
     });
 })
 
 //index
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.sendFile(__dirname + "/public/index.html");
 })
 
 //spt
-app.get('/spt', function(req, res) {
+app.get('/spt', function (req, res) {
     res.sendFile(__dirname + "/public/spt.html");
 })
 
 
-app.get('/anna', function(req, res) {
+app.get('/anna', function (req, res) {
     res.sendFile(__dirname + "/public/anna/index.html");
 })
 
-app.get('/anna/index', function(req, res) {
+app.get('/anna/index', function (req, res) {
     res.sendFile(__dirname + "/public/anna/index.html");
 })
 
-app.get('/anna/create_article', function(req, res) {
+app.get('/anna/create_article', function (req, res) {
     res.sendFile(__dirname + "/public/anna/create_article.html");
 })
 
-app.post('/anna/create', function(req, res) {
+app.post('/anna/create', function (req, res) {
     var title = req.body.title;
     var hashtag = req.body.hashtag;
     var country = req.body.country;
     var date = req.body.date;
     var text = req.body.text;
 
-    console.log(title +" , "+ hashtag +" , "+ country +" , "+ date +" , "+ text)
+    console.log(title + " , " + hashtag + " , " + country + " , " + date + " , " + text)
     if (title && hashtag && country && date && text) {
         //article duplicated validation
         var checkStatement = "select title from anna_goes_around where title ='" + title + "'";
-        conn.query(checkStatement, function(err, count) {
+        conn.query(checkStatement, function (err, count) {
             if (err) throw err;
             if (count.length >= 1) {
                 res.status(200).send("data exist.");
             } else {
                 var insertStatement = "insert into anna_goes_around (title, hashtag, country, date, article) values ('" + title + "','" + hashtag + "','" + country + "','" + date + "','" + text + "')"
                 console.log(insertStatement);
-                conn.query(insertStatement, function(err, results) {
+                conn.query(insertStatement, function (err, results) {
                     if (err) throw err;
                     res.status(200).send("success");
                 });
@@ -159,26 +159,48 @@ app.post('/anna/create', function(req, res) {
 
 // Alice starts from here
 
-app.post('/getClinicList', function(req, res) {
-    conn.query("select * from clinic", function(err, results) {
+app.get('/alice', function (req, res) {
+    res.sendFile(__dirname + "/public/alice.html");
+})
+
+app.post('/getClinicList', function (req, res) {
+    conn.query("select * from clinic", function (err, results) {
         if (err) throw err;
         res.json({ rows: results });
     })
 })
 
-app.post('/removeClinic', function(req, res) {
+app.post('/getSearchedResult', function (req, res) {
+    var searchClinic = req.body.searchClinic;
+        var searchDB = "select clinicName from clinic WHERE clinicName LIKE '%''" + searchClinic + "''%'";
+
+        conn.query(searchDB, function (err, count, results) {
+            console.info(res);
+            if (err) throw err;
+
+            if (count.length = 0) {
+                res.status(200).send("no result.");
+
+            } else { res.json({ rows: results }); }
+
+        })
+    
+
+})
+
+
+
+
+app.post('/removeClinic', function (req, res) {
     var id = req.body.id;
-    conn.query("DELETE FROM clinic where id=" + id, function(err, results) {
+    conn.query("DELETE FROM clinic where id=" + id, function (err, results) {
         if (err) throw err;
         res.sendStatus(200);
     });
 })
 
-app.get('/alice', function(req, res) {
-    res.sendFile(__dirname + "/public/alice.html");
-})
 
-app.post('/alice/createClinic', function(req, res) {
+app.post('/alice/createClinic', function (req, res) {
     var clinicName = req.body.clinicName;
     var doctorName = req.body.doctorName;
     var speciality = req.body.speciality;
@@ -187,21 +209,21 @@ app.post('/alice/createClinic', function(req, res) {
     var addressPoscal = req.body.addressPoscal;
     var city = req.body.city;
 
-    var languageEn = req.body.languageEn  ;
+    var languageEn = req.body.languageEn;
     var languageCn = req.body.languageCn;
 
 
     if (clinicName && doctorName && speciality && addressStreet && addressNumber && addressPoscal && city && languageEn && languageCn) {
         //restaurant duplicated validation
         var checkStatement = "select clinicName from clinic where clinicName ='" + clinicName + "' or doctorName='" + doctorName + "'";
-        conn.query(checkStatement, function(err, count) {
+        conn.query(checkStatement, function (err, count) {
             if (err) throw err;
             if (count.length >= 1) {
                 res.status(200).send("data exist.");
             } else {
                 var insertStatement = "insert into clinic (clinicName, doctorName, speciality, addressStreet, addressNumber, addressPoscal, city, languageEn ,languageCn ) values ('" + clinicName + "','" + doctorName + "','" + speciality + "','" + addressStreet + "','" + addressNumber + "','" + addressPoscal + "','" + city + "','" + languageEn + "','" + languageCn + "')"
 
-                conn.query(insertStatement, function(err, results) {
+                conn.query(insertStatement, function (err, results) {
                     if (err) throw err;
                     res.status(200).send("success");
                 });
@@ -214,10 +236,10 @@ app.post('/alice/createClinic', function(req, res) {
 })
 
 
-app.get('/linda', function(req, res) {
+app.get('/linda', function (req, res) {
     res.sendFile(__dirname + "/public/linda.html");
 })
 
-app.post('/anna/creat', function(req, res) {
+app.post('/anna/creat', function (req, res) {
     console.info("aa");
 })
