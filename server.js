@@ -21,7 +21,7 @@
 var express = require("express");
 var app = express();
 var mysql = require("mysql");
-var port = process.env.PORT || 5050;
+var port = process.env.PORT || 5051;
 var option = require("./db/dbOption");
 
 console.info(option.db_option().host);
@@ -115,6 +115,8 @@ app.get('/spt', function (req, res) {
 
 
 app.get('/anna', function (req, res) {
+//Anna
+app.get('/anna', function(req, res) {
     res.sendFile(__dirname + "/public/anna/index.html");
 })
 
@@ -127,10 +129,15 @@ app.get('/anna/create_article', function (req, res) {
 })
 
 app.post('/anna/create', function (req, res) {
+app.post('/anna/creat', function(req, res) {
+    console.info("aa");
+})
+
+app.post('/anna/create', function(req, res) {
     var title = req.body.title;
     var hashtag = req.body.hashtag;
-    var country = req.body.country;
     var date = req.body.date;
+    var country = req.body.country;
     var text = req.body.text;
 
     console.log(title + " , " + hashtag + " , " + country + " , " + date + " , " + text)
@@ -155,6 +162,20 @@ app.post('/anna/create', function (req, res) {
     }
 })
 
+app.post('/getArticle', function(req, res) {
+    conn.query("select * from anna_goes_around", function(err, results) {
+        if (err) throw err;
+        res.json({ rows: results });
+    })
+})
+
+app.post('/removeArticle', function(req, res) {
+    var id = req.body.id;
+    conn.query("DELETE FROM anna_goes_around where id=" + id, function(err, results) {
+        if (err) throw err;
+        res.sendStatus(200);
+    });
+})
 
 
 // Alice starts from here
@@ -240,6 +261,4 @@ app.get('/linda', function (req, res) {
     res.sendFile(__dirname + "/public/linda.html");
 })
 
-app.post('/anna/creat', function (req, res) {
-    console.info("aa");
-})
+})})

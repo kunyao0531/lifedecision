@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 
 <head>
+    <meta charset="utf-8">
     <title>Decisions in life - Anna Goes Around</title>
     <!-- Latest compiled and minified CSS -->
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/anna.css">
     <style>
@@ -10,6 +12,7 @@
             cursor: pointer;
         }
     </style>
+    <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
 </head>
 
 <body>
@@ -88,27 +91,27 @@
                     <div class="form-group">
                         <label>#Hashtag/主題: </label><br>
                         <form action="/action_page.php">
-                            <input type="checkbox" id="hashtag1" name="eat" value="eat">
+                            <input type="checkbox" id="hashtag1" name="eat" value="eat" class="hashtag">
                             <label for="hashtag1"> #安娜到處吃</label><br>
-                            <input type="checkbox" id="hashtag2" name="try" value="try">
+                            <input type="checkbox" id="hashtag2" name="try" value="try" class="hashtag">
                             <label for="hashtag2"> #安娜嚐鮮趣</label><br>
-                            <input type="checkbox" id="hashtag3" name="travel" value="travel">
+                            <input type="checkbox" id="hashtag3" name="travel" value="travel" class="hashtag">
                             <label for="hashtag3"> #安娜旅行趣</label><br>
-                            <input type="checkbox" id="hashtag4" name="culture" value="culture">
+                            <input type="checkbox" id="hashtag4" name="culture" value="culture" class="hashtag">
                             <label for="hashtag4"> #安娜談文化</label><br>
-                            <input type="checkbox" id="hashtag5" name="experience" value="experience">
+                            <input type="checkbox" id="hashtag5" name="experience" value="experience" class="hashtag">
                             <label for="hashtag5"> #安娜談經驗</label><br>
-                            <input type="checkbox" id="hashtag6" name="cook" value="cook">
+                            <input type="checkbox" id="hashtag6" name="cook" value="cook" class="hashtag">
                             <label for="hashtag6"> #安娜下廚趣</label><br>
-                            <input type="checkbox" id="hashtag7" name="cookhome" value="cookhome">
+                            <input type="checkbox" id="hashtag7" name="cookhome" value="cookhome" class="hashtag">
                             <label for="hashtag7"> #家鄉味自己做</label><br>
-                            <input type="checkbox" id="hashtag8" name="share" value="share">
+                            <input type="checkbox" id="hashtag8" name="share" value="share" class="hashtag">
                             <label for="hashtag8"> #安娜享好物</label><br>
-                            <input type="checkbox" id="hashtag9" name="stueat" value="stueat">
+                            <input type="checkbox" id="hashtag9" name="stueat" value="stueat" class="hashtag">
                             <label for="hashtag9"> #斯圖加特餐廳推薦</label><br>
-                            <input type="checkbox" id="hashtag10" name="esseat" value="esseat">
+                            <input type="checkbox" id="hashtag10" name="esseat" value="esseat" class="hashtag">
                             <label for="hashtag10"> #埃森餐廳推薦</label><br>
-                            <input type="checkbox" id="hashtag11" name="duseat" value="duseat">
+                            <input type="checkbox" id="hashtag11" name="duseat" value="duseat" class="hashtag">
                             <label for="hashtag11"> #杜賽道夫餐廳推薦</label><br>
                           </form>
                     </div>
@@ -116,7 +119,7 @@
 
                     <div class="form-group">
                         <label>發表時間:</label>
-                        <select class="form-control" id="date_add">
+                        <select class="date_add" id="date_add">
                             <option value="choosedate">請選擇</option>
                             <option value="2020-12-01">12.2020.</option>
                             <option value="2020-11-01">11.2020.</option>
@@ -144,13 +147,17 @@
             </div>
 
             <div class="col-md-9">
-                <form action="/action_page.php">
+                <form name = 'form' action = '#' method='post'>
                     <label for="addtext">内文:</label>
                     <br>
-                    <textarea class="form-control" id="add_text" name="addtext" rows="30" ></textarea>
+
+                    <textarea name="text_add" id="text_add" class="text"></textarea>
+                    <script>
+                        CKEDITOR.replace( 'text_add' );
+                    </script>
                 </form>
                     <br>
-                    <input type="button" id="add_article" name="add article" class="btn btn-success" value="新增文章">
+                    <input type="submit" id="add_article" name="add article" class="btn btn-success" value="新增文章">
                     <div class="alert alert-danger" role="alert" style="margin-top:20px;">文章標題已存在!</div>
             </div>
 
@@ -167,7 +174,7 @@
                             <tr>
                                 <td colspan="5" class="text-align:right;">
                                     <button class="btn btn-warning refreshtable"><i class="glyphicon glyphicon-refresh"></i> 刷新</button>
-                                    <button onclick="window.location='/anna/index';" class="btn btn-warning refreshtable"><i class=""></i> 尋找文章</button>
+                                    <button onclick="window.location='/anna/index';" class="btn btn-warning search"><i class=""></i> 尋找文章</button>
                                 </td>
                             </tr>
                             <tr>
