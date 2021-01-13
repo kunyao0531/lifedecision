@@ -1,95 +1,96 @@
 $(function(){
-    
-function countryConvert(country) {
-    switch (country) {
-        case "germany":
-            return "德國"
-        case "sweden":
-            return "瑞典"
-        case "spain":
-            return "西班牙"
-        case "swiss":
-            return "瑞士"
-    }
-}
-
-function dateConvert(input) {
-    var date = new Date(input); //convert the input string to Date object
-    var m = date.getMonth() + 1; //getMonth returns 0-11 only
-	var y = date.getFullYear();
-
-    var dateString = (m <= 9 ? '0' + m : m) + '.' + y;
-        
-    return dateString;
-}
-
-function hashtagConvert(hashtags){
-
-    var returnString = "";
-    var hashtagArray = hashtags.split(',');
-    var count = 0;
-    hashtagArray.forEach(function(item){
-     if(count === 0){returnString = hashtagNameConvert(item);}
-    else{returnString = returnString + "," + hashtagNameConvert(item);}
-    count ++;
-    })
-    return returnString;
-}
-    
-function hashtagNameConvert(hashtag) {
-        switch (hashtag) {
-            case "eat":
-                return "#安娜到處吃"
-            case "try":
-                return "#安娜嚐鮮趣"
-            case "travel":
-                return "#安娜旅行趣"
-            case "culture":
-                return "#安娜談文化"
-            case "experience":
-                return "#安娜談經驗"
-            case "cook":
-                return "#安娜下廚趣"
-            case "cookhome":
-                return "#家鄉味自己做"
-            case "share":
-                return "#安娜享好物"
-            case "stueat":
-                return "#斯圖加特餐廳推薦"
-            case "esseat":
-                return "#埃森餐廳推薦"
-            case "duseat":
-                return "#杜賽道夫餐廳推薦"
+    function countryConvert(country) {
+        switch (country) {
+            case "germany":
+                return "德國"
+            case "sweden":
+                return "瑞典"
+            case "spain":
+                return "西班牙"
+            case "swiss":
+                return "瑞士"
         }
-}
-     //get list get data from mysql database
-     var getArticleList = function() {
-        $("#result_add tbody tr").remove();
-        $.post("/getArticle", function(response) {
-            for (var i = 0; i < response.rows.length; i++) {
-                var deleteBT = "<a href='#' class='rm pointer' id='" + response.rows[i].id + "'>Delete</a>"; //create a delete button?
-                $("#result_add tbody").append("<tr><td><div class='articleName'>" + response.rows[i].title +
-                    "</div></td><td>" + hashtagConvert(response.rows[i].hashtag) +
-                    "</td><td>" + dateConvert(response.rows[i].date) +
-                    "</td><td>" + countryConvert(response.rows[i].country) +
-                    "</td><td>" + deleteBT + "</td></tr>")
-            }
-            
-            //delete pointer is delete
-            $("#result_add tr .pointer").on('click', function() {
-                var idx = $(".pointer").index(this);
-                var id = $(this).attr("id");
-                var model = { id: id };
-                $.post('/removeArticle', model, function(response) {
-                    if (response === 'OK') {
-                        $(".pointer").eq(idx).parent().parent().remove(); //why? jquery
-                    };
-                });
-                return false;
-            });
-
-        })
     }
+
+    function dateConvert(input) {
+        var date = new Date(input); //convert the input string to Date object
+        var m = date.getMonth() + 1; //getMonth returns 0-11 only
+        var y = date.getFullYear();
+
+        var dateString = (m <= 9 ? '0' + m : m) + '.' + y;
+            
+        return dateString;
+    }
+
+    function hashtagConvert(hashtags){
+
+        var returnString = "";
+        var hashtagArray = hashtags.split(',');
+        var count = 0;
+        hashtagArray.forEach(function(item){
+        if(count === 0){returnString = hashtagNameConvert(item);}
+        else{returnString = returnString + "," + hashtagNameConvert(item);}
+        count ++;
+        })
+        return returnString;
+    }
+        
+    function hashtagNameConvert(hashtag) {
+            switch (hashtag) {
+                case "eat":
+                    return "#安娜到處吃"
+                case "try":
+                    return "#安娜嚐鮮趣"
+                case "travel":
+                    return "#安娜旅行趣"
+                case "culture":
+                    return "#安娜談文化"
+                case "experience":
+                    return "#安娜談經驗"
+                case "cook":
+                    return "#安娜下廚趣"
+                case "cookhome":
+                    return "#家鄉味自己做"
+                case "share":
+                    return "#安娜享好物"
+                case "stueat":
+                    return "#斯圖加特餐廳推薦"
+                case "esseat":
+                    return "#埃森餐廳推薦"
+                case "duseat":
+                    return "#杜賽道夫餐廳推薦"
+            }
+    }
+
+    //get list get data from mysql database
+    var getArticleList = function() {
+    $("#result_add tbody tr").remove();
+    $.post("/getArticle", function(response) {
+    for (var i = 0; i < response.rows.length; i++) {
+        var deleteBT = "<a href='#' class='rm pointer' id='" + response.rows[i].id + "'>Delete</a>"; //create a delete button?
+        $("#result_add tbody").append("<tr><td><div class='articleName'>" + response.rows[i].title +
+            "</div></td><td>" + hashtagConvert(response.rows[i].hashtag) +
+            "</td><td>" + dateConvert(response.rows[i].date) +
+            "</td><td>" + countryConvert(response.rows[i].country) +
+            "</td><td>" + deleteBT + "</td></tr>")
+    }
+
+    //delete pointer is delete
+    $("#result_add tr .pointer").on('click', function() {
+        var idx = $(".pointer").index(this);
+        var id = $(this).attr("id");
+        var model = { id: id };
+        $.post('/removeArticle', model, function(response) {
+            if (response === 'OK') {
+                $(".pointer").eq(idx).parent().parent().remove(); //why? jquery
+            };
+        });
+        return false;
+    });
+
+    })
+    }
+
     /*
     //search result
     $("#submitFormSearch").on('click', function () {

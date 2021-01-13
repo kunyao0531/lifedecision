@@ -21,7 +21,7 @@
 var express = require("express");
 var app = express();
 var mysql = require("mysql");
-var port = process.env.PORT || 5051;
+var port = process.env.PORT || 5050;
 var option = require("./db/dbOption");
 
 console.info(option.db_option().host);
@@ -188,28 +188,30 @@ app.post('/getSearchedAricleResult', function (req, res) {
 })
 */
 
+
+
+
+
 // Alice starts from here
 
 app.get('/alice', function (req, res) {
     res.sendFile(__dirname + "/public/alice.html");
 })
 
-app.post('/getClinicList', function (req, res) {
+app.post('/alice/getClinicList', function (req, res) {
     conn.query("select * from clinic", function (err, results) {
         if (err) throw err;
         res.json({ rows: results });
     })
 })
 
-app.post('/getSearchedResult', function (req, res) {
+app.post('/alice/getSearchedResult', function (req, res) {
     var searchClinic = req.body.searchClinic;
-        var searchDB = "select clinicName from clinic WHERE clinicName LIKE '%''" + searchClinic + "''%'";
+        var searchDB = "select * from clinic WHERE clinicName LIKE '%"+ searchClinic +"%'";
 
-        conn.query(searchDB, function (err, count, results) {
-            console.info(res);
+        conn.query(searchDB, function (err, results) {
             if (err) throw err;
-
-            if (count.length = 0) {
+            if (results.length === 0) {
                 res.status(200).send("no result.");
 
             } else { res.json({ rows: results }); }
@@ -222,7 +224,7 @@ app.post('/getSearchedResult', function (req, res) {
 
 
 
-app.post('/removeClinic', function (req, res) {
+app.post('/alice/removeClinic', function (req, res) {
     var id = req.body.id;
     conn.query("DELETE FROM clinic where id=" + id, function (err, results) {
         if (err) throw err;
