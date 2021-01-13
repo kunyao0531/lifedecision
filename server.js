@@ -93,8 +93,6 @@ app.post('/getList', function (req, res) {
     })
 })
 
-
-
 app.post('/remove', function (req, res) {
     var id = req.body.id;
     conn.query("DELETE FROM restaurants where id=" + id, function (err, results) {
@@ -113,27 +111,21 @@ app.get('/spt', function (req, res) {
     res.sendFile(__dirname + "/public/spt.html");
 })
 
-
-app.get('/anna', function (req, res) {
 //Anna
 app.get('/anna', function(req, res) {
     res.sendFile(__dirname + "/public/anna/index.html");
 })
 
-app.get('/anna/index', function (req, res) {
+app.get('/anna/index', function(req, res) {
     res.sendFile(__dirname + "/public/anna/index.html");
 })
 
-app.get('/anna/create_article', function (req, res) {
+app.get('/anna/create_article', function(req, res) {
     res.sendFile(__dirname + "/public/anna/create_article.html");
 })
 
-app.post('/anna/create', function (req, res) {
-app.post('/anna/creat', function(req, res) {
-    console.info("aa");
-})
-
-app.post('/anna/create', function(req, res) {
+//create after clicking create button
+app.post('/anna/create', function(req, res) { 
     var title = req.body.title;
     var hashtag = req.body.hashtag;
     var date = req.body.date;
@@ -176,7 +168,25 @@ app.post('/removeArticle', function(req, res) {
         res.sendStatus(200);
     });
 })
+/*
+app.post('/getSearchedAricleResult', function (req, res) {
+    var searchArticle = req.body.searchArticle;
+        var searchDB = "select title from article WHERE title LIKE '%''" + searchArticle + "''%'";
 
+        conn.query(searchDB, function (err, count, results) {
+            console.info(res);
+            if (err) throw err;
+
+            if (count.length = 0) {
+                res.status(200).send("no result.");
+
+            } else { res.json({ rows: results }); }
+
+        })
+    
+
+})
+*/
 
 // Alice starts from here
 
@@ -255,10 +265,3 @@ app.post('/alice/createClinic', function (req, res) {
         res.send("all columns is mandatory");
     }
 })
-
-
-app.get('/linda', function (req, res) {
-    res.sendFile(__dirname + "/public/linda.html");
-})
-
-})})
