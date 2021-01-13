@@ -5,7 +5,7 @@ $(function () {
     //get list
     var getClinicList = function () {
         $("#clinic-list tbody tr").remove();
-        $.post("/getClinicList", function (response) {
+        $.post("/alice/getClinicList", function (response) {
 
 
 
@@ -27,7 +27,7 @@ $(function () {
                 var idx = $(".pointer").index(this);
                 var id = $(this).attr("id");
                 var model = { id: id };
-                $.post('/removeClinic', model, function (response) {
+                $.post('/alice/removeClinic', model, function (response) {
                     if (response === 'OK') {
                         $(".pointer").eq(idx).parent().parent().remove();
                     };
@@ -55,10 +55,10 @@ $(function () {
 
             var model = {searchClinic: $("#searchClinic").val()}
 
-            $.post("/getSearchedResult", model, function (response) {
-                // if (err === "no result.") {
-                //     alert("No result"); return false;
-                // }
+            $.post("/alice/getSearchedResult", model, function (response,returnedMessage) {
+                if (returnedMessage === "no result.") {
+                    alert("No result"); return false;
+                }
 
                 for (var i = 0; i < response.rows.length; i++) {
                     $("#search-result-list tbody").append("<tr><td><div>" + response.rows[i].clinicName +
