@@ -124,7 +124,7 @@ app.get('/anna/create_article', function(req, res) {
     res.sendFile(__dirname + "/public/anna/create_article.html");
 })
 
-//create after clicking create button
+//create article after clicking create button 到後端，把資料放到mysql中
 app.post('/anna/create', function(req, res) { 
     var title = req.body.title;
     var hashtag = req.body.hashtag;
@@ -154,10 +154,47 @@ app.post('/anna/create', function(req, res) {
     }
 })
 
+//NEW create label after clicking create button 到後端，把資料放到mysql中
+app.post('/anna/createLabel', function(req, res) { 
+    var label_chi = req.body.label_chi;
+    var label_eng = req.body.label_eng;
+    var category = req.body.category;
+
+    console.log(label_chi + " , " + label_eng + " , " + category)
+    if (label_chi && label_eng && category) {
+
+        //article duplicated validation
+        var checkStatement = "select label_chi, label_eng from label where label_chi ='" + label_chi + "' and label_eng ='" + label_eng + "'";
+        conn.query(checkStatement, function (err, count) {
+            if (err) throw err;
+            if (count.length >= 1) {
+                res.status(200).send("data exist.");
+            } else {
+                var insertStatement = "insert into label (label_chi, label_eng, category) values ('" + label_chi + "','" + label_eng + "','" + category + "')"
+                console.log(insertStatement);
+                conn.query(insertStatement, function (err, results) {
+                    if (err) throw err;
+                    res.status(200).send("success");
+                });
+            }
+        })
+    } else {
+        res.send("all columns is mandatory");
+    }
+})
+
 app.post('/getArticle', function(req, res) {
     conn.query("select * from anna_goes_around", function(err, results) {
         if (err) throw err;
         res.json({ rows: results });
+    })
+})
+
+//NEW label
+app.post('/getLabel', function(req, res){
+    conn.query("select * from label", function(err, results) {
+        if (err) throw err;
+        res.json({ rows: results});
     })
 })
 
@@ -168,25 +205,16 @@ app.post('/removeArticle', function(req, res) {
         res.sendStatus(200);
     });
 })
-/*
-app.post('/getSearchedAricleResult', function (req, res) {
-    var searchArticle = req.body.searchArticle;
-        var searchDB = "select title from article WHERE title LIKE '%''" + searchArticle + "''%'";
 
-        conn.query(searchDB, function (err, count, results) {
-            console.info(res);
-            if (err) throw err;
-
-            if (count.length = 0) {
-                res.status(200).send("no result.");
-
-            } else { res.json({ rows: results }); }
-
-        })
-    
-
+//NEW delet label
+app.post('/removeLabel', function(req, res) {
+    var id = req.body.id;
+    conn.query("DELETE FROM label where id=" + id, function(err, results) {
+        if (err) throw err;
+        res.sendStatus(200);
+    });
 })
-*/
+
 
 
 
