@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
     function countryConvert(country) {
         switch (country) {
             case "germany":
@@ -38,9 +38,8 @@ $(function () {
         var returnString = "";
         var hashtagArray = hashtags.split(',');
         var count = 0;
-        hashtagArray.forEach(function (item) {
-            if (count === 0) { returnString = hashtagNameConvert(item); }
-            else { returnString = returnString + "," + hashtagNameConvert(item); }
+        hashtagArray.forEach(function(item) {
+            if (count === 0) { returnString = hashtagNameConvert(item); } else { returnString = returnString + "," + hashtagNameConvert(item); }
             count++;
         })
         return returnString;
@@ -73,11 +72,14 @@ $(function () {
         }
     }
 
-    
+
     // NEW datatable set add article and label results 10 items per page
-    $(document).ready( function () {
+    $(document).ready(function() {
+
         var articleTable = $('#result_add').DataTable({
-            "order": [[ 0, "desc" ]], //first column (0) ascending, not working
+            "order": [
+                [0, "desc"]
+            ], //first column (0) ascending, not working
             "ordering": false, //disable ordering feature
             "searching": false, //disable searching feature
             "paging": true,
@@ -88,15 +90,30 @@ $(function () {
                 "sNext": "下一頁",
                 "sLast": "末頁"
             },
+            "ajax": {
+                "url": "/getArticle",
+                "type": "POST"
+            },
+            "columns": [
+                { "data": "title" },
+                { "data": "hashtag" },
+                { "data": "date" },
+                { "data": "country" },
+                { "data": "article" }
+            ]
+
+
         });
 
-        $('#result_add tbody').on('click', 'tr', function () {
-            var data = articleTable.row( this ).data();
-            alert( 'You clicked on '+data[0]+'\'s row' );
-        } );
+        $('#result_add tbody').on('click', 'tr', function() {
+            var data = articleTable.row(this).data();
+            alert('You clicked on ' + data["title"] + '\'s row');
+        });
 
         $('#label_result_add').DataTable({
-            "order": [[ 0, "desc" ]], //first column (0) ascending, not working
+            "order": [
+                [0, "desc"]
+            ], //first column (0) ascending, not working
             "ordering": false, //disable ordering feature
             "searching": false, //disable searching feature
             "paging": true,
@@ -108,13 +125,17 @@ $(function () {
                 "sLast": "末頁"
             },
         });
-    } );
+    });
 
 
     //get list get data from mysql database 把mysql的資料貼回來
-    var getArticleList = function () {
+    /*
+    var getArticleList = function() {
+        
         $("#result_add tbody tr").remove();
-        $.post("/getArticle", function (response) {
+        $.post("/getArticle", function(response) {
+            
+            
             for (var i = 0; i < response.rows.length; i++) {
                 var deleteBT1 = "<a href='#' class='rm delete_article' id='" + response.rows[i].id + "'>Delete</a>"; 
                 $("#result_add tbody").append("<tr><td><div class='articleName'>" + response.rows[i].title +
@@ -123,15 +144,18 @@ $(function () {
                     "</td><td>" + countryConvert(response.rows[i].country) +
                     "</td><td>" + deleteBT1 + "</td></tr>")
             }
+            
         })
+        
     }
+    */
 
     //NEW get label list get data from mysql database
-    var getLabelList = function () {
+    var getLabelList = function() {
         $("#label_result_add tbody tr").remove();
-        $.post("/getLabel", function (response) {
+        $.post("/getLabel", function(response) {
             for (var i = 0; i < response.rows.length; i++) {
-                var deleteBT2 = "<a href='#' class='rm delete_label' id='" + response.rows[i].id + "'>Delete</a>"; 
+                var deleteBT2 = "<a href='#' class='rm delete_label' id='" + response.rows[i].id + "'>Delete</a>";
                 $("#label_result_add tbody").append("<tr><td><div class='labelName'>" + response.rows[i].label_chi +
                     "</div></td><td>" + response.rows[i].label_eng +
                     "</div></td><td>" + categoryConvert(response.rows[i].category) +
@@ -141,11 +165,11 @@ $(function () {
     }
 
     //delete. pointer is delete
-    $("#result_add tr .delete_article").on('click', function () {
+    $("#result_add tr .delete_article").on('click', function() {
         var idx = $(".delete_article").index(this);
         var id = $(this).attr("id");
         var model = { id: id };
-        $.post('/removeArticle', model, function (response) {
+        $.post('/removeArticle', model, function(response) {
             if (response === 'OK') {
                 $(".delete_article").eq(idx).parent().parent().remove(); //why? jquery
             };
@@ -174,121 +198,121 @@ $(function () {
 
 
     //add article button
-    $("#add_article").on('click', function () {
-    $(".alert-danger").hide();
+    $("#add_article").on('click', function() {
+        $(".alert-danger").hide();
 
-    //add article title 驗證資料
-    var name = $("#title_add").val();
-    if (name.length === 0) { alert("表格需填寫完整"); return false; }
+        //add article title 驗證資料
+        var name = $("#title_add").val();
+        if (name.length === 0) { alert("表格需填寫完整"); return false; }
 
-    // var name = $("#text_add").val();
-    // if (name.length === 0) { alert("表格需填寫完整"); return false; }
+        // var name = $("#text_add").val();
+        // if (name.length === 0) { alert("表格需填寫完整"); return false; }
 
-    var hashtagList = "";
+        var hashtagList = "";
 
-    //ckeditor
-    CKEDITOR.replace('#text_add', {
-        extraPlugins: 'add_article'
-    });
-
-    document.querySelector('form').onsubmit = function (evt) {
-        evt.preventDefault();
-
-        var data = new FormData(evt.target);
-
-        console.info(data.get('editor'));
-    };
-    //ckeditor ends here
-
-    $(".hashtag[type=checkbox]:checked").each(function () {
-        if (hashtagList === "") { hashtagList = $(this).val(); } else { hashtagList = hashtagList + "," + $(this).val(); }
-
-    })
-    //打包資料
-    var model = {
-        title: $("#title_add").val(),
-        text: CKEDITOR.instances.text_add.getData(),
-        hashtag: hashtagList,
-        date: $("#date_add").val(),
-        country: $("#country_add").val()
-    };
-    //抓到資料后，送到後端
-    $.post("/anna/create", model, function (err, response) {
-        if (err === "data exist.") {
-            $(".alert-danger").show();
-        } else {
-            $("#result_add").append("<tr><td><div class='articleName'>" + model.title +
-                "</div></td><td>" + hashtagConvert(model.hashtag) +
-                "</td><td>" + dateConvert(model.date) +
-                "</td><td>" + countryConvert(model.country) + "</td><td>Added</td></tr>")
-        }
-    });
-
-    $("#title2").val("");
-
-});
-
-$(".refreshtableArticle").on('click', function () {
-    getArticleList();
-});
-
-//NEW add label button
-$("#add_label").on('click', function () {
-    $(".alert-danger").hide();
-
-    //add label  驗證資料
-    var label_chi_name = $("#label_chi_add").val();
-    if (label_chi_name.length === 0) { alert("表格需填寫完整"); return false; }
-
-    var label_eng_name = $("#label_eng_add").val();
-    if (label_eng_name.length === 0) { alert("表格需填寫完整"); return false; }
-
-    //dropdown 驗證
-    $(function () {
-        $("#add_label").click(function () {
-            var ddlabel_result_add = $("#ddlFruits");
-            if (ddlabel_result_add.val() == "") {
-                //If the "Please Select" option is selected display error.
-                alert("請選擇 category");
-                return false;
-            }
-            return true;
+        //ckeditor
+        CKEDITOR.replace('#text_add', {
+            extraPlugins: 'add_article'
         });
+
+        document.querySelector('form').onsubmit = function(evt) {
+            evt.preventDefault();
+
+            var data = new FormData(evt.target);
+
+            console.info(data.get('editor'));
+        };
+        //ckeditor ends here
+
+        $(".hashtag[type=checkbox]:checked").each(function() {
+                if (hashtagList === "") { hashtagList = $(this).val(); } else { hashtagList = hashtagList + "," + $(this).val(); }
+
+            })
+            //打包資料
+        var model = {
+            title: $("#title_add").val(),
+            text: CKEDITOR.instances.text_add.getData(),
+            hashtag: hashtagList,
+            date: $("#date_add").val(),
+            country: $("#country_add").val()
+        };
+        //抓到資料后，送到後端
+        $.post("/anna/create", model, function(err, response) {
+            if (err === "data exist.") {
+                $(".alert-danger").show();
+            } else {
+                $("#result_add").append("<tr><td><div class='articleName'>" + model.title +
+                    "</div></td><td>" + hashtagConvert(model.hashtag) +
+                    "</td><td>" + dateConvert(model.date) +
+                    "</td><td>" + countryConvert(model.country) + "</td><td>Added</td></tr>")
+            }
+        });
+
+        $("#title2").val("");
+
     });
 
-    //var labelList = "";
-
-    //打包資料
-    var model = {
-        label_chi: label_chi_name,
-        label_eng: label_eng_name,
-        category: $("#category_add").val()
-    };
-
-    //抓到資料后，送到後端
-    $.post("/anna/createLabel", model, function (err, response) {
-        if (err === "data exist.") {
-            $(".alert-danger").show();
-        } else {
-            $("#label_result_add").append("<tr><td><div class='labelName'>" + model.label_chi +
-                "</div></td><td>" + model.label_eng +
-                "</div></td><td>" + categoryConvert(model.category) +
-                "</td><td>Added</td></tr>")
-        }
+    $(".refreshtableArticle").on('click', function() {
+        getArticleList();
     });
 
-    $("#title2").val("");
+    //NEW add label button
+    $("#add_label").on('click', function() {
+        $(".alert-danger").hide();
 
-});
+        //add label  驗證資料
+        var label_chi_name = $("#label_chi_add").val();
+        if (label_chi_name.length === 0) { alert("表格需填寫完整"); return false; }
 
-//NEW label
-$(".refreshtableLabel").on('click', function () {
+        var label_eng_name = $("#label_eng_add").val();
+        if (label_eng_name.length === 0) { alert("表格需填寫完整"); return false; }
+
+        //dropdown 驗證
+        $(function() {
+            $("#add_label").click(function() {
+                var ddlabel_result_add = $("#ddlFruits");
+                if (ddlabel_result_add.val() == "") {
+                    //If the "Please Select" option is selected display error.
+                    alert("請選擇 category");
+                    return false;
+                }
+                return true;
+            });
+        });
+
+        //var labelList = "";
+
+        //打包資料
+        var model = {
+            label_chi: label_chi_name,
+            label_eng: label_eng_name,
+            category: $("#category_add").val()
+        };
+
+        //抓到資料后，送到後端
+        $.post("/anna/createLabel", model, function(err, response) {
+            if (err === "data exist.") {
+                $(".alert-danger").show();
+            } else {
+                $("#label_result_add").append("<tr><td><div class='labelName'>" + model.label_chi +
+                    "</div></td><td>" + model.label_eng +
+                    "</div></td><td>" + categoryConvert(model.category) +
+                    "</td><td>Added</td></tr>")
+            }
+        });
+
+        $("#title2").val("");
+
+    });
+
+    //NEW label
+    $(".refreshtableLabel").on('click', function() {
+        getLabelList();
+    });
+
+
+
+    //NEW label
     getLabelList();
-});
 
-
-getArticleList();
-//NEW label
-getLabelList();
-    
 })
